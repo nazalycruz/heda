@@ -100,7 +100,7 @@ class Recursos_humanos extends IIS_Controller {
 		$infoFiltrada = $this->mRH->obtenerlistadoVacacional($idPresupuesto,$idPeriodo,$tomadas,$idDependencia);
 
 		if(!empty($infoFiltrada)){
-			//enviando los checkbox
+			//enviando los checkbox sin embargo modifica los valores de las celdas que causa error en filtrado y exportacion
 			$checkboxFields = ['PrimaPagada', 'Tomadas', 'tienecancelaciones'];
 			foreach ($infoFiltrada as &$empleado) {
 				foreach ($checkboxFields as $field) {
@@ -129,7 +129,7 @@ class Recursos_humanos extends IIS_Controller {
 				'checkBoxAll'     => false,
 				'idTbl'           => 'tblEmpleados',
 				'confFiltros'     => ['filtrosSelect' => [2,6,15,17,20,23,24,25]],
-			]);
+			],array('modCell'  => array('targets' => array(4,5,6),'arrColMod' => array(4,4,5,5,6,6), 'arrayBusca' => array('1','0','1','0'), 'arrayMod' => array('<input type="checkbox">','<input type="checked>"','<input type="checked" checked>','<input type="checked">'))),);
 			$abc->set_defaults('filtros');
 			$abc->set_encabezados(array(
 				'Credencial' => 'Credencial',
