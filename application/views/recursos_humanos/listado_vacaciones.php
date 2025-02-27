@@ -19,14 +19,46 @@
 		</div>
 	</div>
 </form>
-<div class="card mt-2" style="display:none;" id="cardtblempleados">
-	<div class="card-body" id="result_empleados">
-
-	</div>
-</div>
 <div id="result_txt">
 
 </div>
+
+<div id="formPrimaAplicar" class="card" mb-2 style="display:none;">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-2">
+				<div class="form-group">
+				<label for="pe_fechaini" class="form-label">Fecha Inicio</label>
+				<input type="text" class="form-control form-control-sm fechasPE" id="pe_fechaini" name="pe_fechaini" required autocomplete="off">
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="form-group">
+				<label for="pe_fechafin" class="form-label">Fecha Final</label>
+				<input type="text" class="form-control form-control-sm fechasPE" id="pe_fechafin" name="pe_fechafin" required autocomplete="off">
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="form-group">
+					<label class="form-label" for="">($)Prima vacional</label>
+					<input value="" type="text" class="form-control form-control-sm " id="primavacacional" name="primavacacional" placeholder="($)" autocomplete="off" required >
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="form-group">
+					<label class="form-label" for="">Observaciones</label>
+					<input value="" type="text" class="form-control form-control-sm " id="observaciones" name="observaciones" placeholder="comentarios" autocomplete="off" required >
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div class="card-footer text-end">
+		<button type="button" class="btn btn-inverse btn-sm" onclick="aplicarVacaciones();" id="btnAplicar" name="btnAplicar">
+			Aplicar
+		</button>
+	</div>
+</div>
+
 <div class="row" style="display:none;" id="divTabla">
   <div class="col-md-12">
     <div class="card">
@@ -70,6 +102,7 @@
     </div>
   </div>
 </div>
+
 <script>
 $(document).ready(function() {
 	
@@ -97,13 +130,28 @@ function listadoempleados(){
 		if(data.status == false){
 			alerta_emergente(data.message,"warning");
 			$('div#result_txt').empty();
+			$('#formPrimaAplicar').hide();
 		}else{
 			$('div#result_txt').html(data.html);
+			$('#formPrimaAplicar').show();
 		}
 	},
 	"generando lista..."
 	);
 }
+
+$(".fechasPE").datepicker({
+    format: "dd/mm/yyyy",
+    weekStart: 1,
+    maxViewMode: 3,
+    language: "es",
+    orientation: "bottom auto",
+    autoclose: true,
+    todayBtn: "linked",
+    todayHighlight: true,
+  }).on("hide", function(e) {
+    // dispara_tab_especial(e);
+  })
 
 function listado(){
 	let tabla = $('#tblEmpleadosConfig').DataTable();
